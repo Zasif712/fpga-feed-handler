@@ -3,7 +3,7 @@
 Binary format for market data sent from the packet generator to the FPGA.
 One message per UDP packet.
 
-UDP destination port: TBD
+UDP destination port: 5000 (arbitrary for now)
 
 ## Conventions
 

@@ -14,12 +14,18 @@ def encode_message(msg):
         ">1sQ1sI8sI",
         msg["type"].encode(),              # 1 byte as minimal types
         msg["order_id"],                   # 8 bytes to allow a lot of orders
-        msg["side"].encode(),              # 1 byte as only need "b" or "s"
+        msg["side"].encode(),              # 1 byte as only need "B" or "S"
         msg["qty"],                        # 4 bytes allows up to 4.29 billion quantity
-        msg["symbol"].encode().ljust(8),   # 8 bytes (make symbol 8 bytes, and pad the right with 0)
+        msg["symbol"].encode().ljust(8),   # 8 bytes (make symbol 8 bytes, and pad the right with spaces)
         msg["price"],                      # 4 bytes (can hold prices up to : 429,496.7295)
     )
 
-for msg in messages:
-    payload = encode_message(msg)
-    print(len(b), b.hex(" "))
+def build_payloads(messages):
+    payloads = []
+    for msg in messages:
+        payloads.append(encode_message(msg))
+    return payloads
+
+if __name__ == "__main__":
+    for p in build_payloads(messages):
+        print(len(p), p.hex(" "))
